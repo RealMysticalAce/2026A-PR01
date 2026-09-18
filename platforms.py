@@ -40,22 +40,13 @@ def create_platform(x, y, platform_type="green"):
     platform = {
         "x": float(x),
         "y": float(y),
-        "type": platform_type,                    # TODO
-        "image": platform_images[platform_type],  # TODO
-        "vx": 0.0 if platform_type != "blue" else MOVING_PLATFORM_SPEED,                          # TODO
+        "type": platform_type,                   
+        "image": platform_images[platform_type],  
+        "vx": 0.0 if platform_type != "blue" else MOVING_PLATFORM_SPEED,                          
         "active": True,
         "width": PLATFORM_SIZE[0],
-        "height": PLATFORM_SIZE[1] if platform_type != "spring" else PLATFORM_SIZE[1] + 10          # TODO
+        "height": PLATFORM_SIZE[1] if platform_type != "spring" else PLATFORM_SIZE[1] + 10          
     }
-
-    # TODO : Modifiez le dictionnaire ci-dessus pour qu'il dépende réellement
-    # de l'argument platform_type.
-    #
-    # Contraintes :
-    # - l'image doit être obtenue à partir de platform_images ;
-    # - une plateforme bleue se déplace à MOVING_PLATFORM_SPEED ;
-    # - une plateforme à ressort est 10 pixels plus haute ;
-    # - les autres plateformes sont immobiles et gardent la hauteur normale.
 
     return platform
 
