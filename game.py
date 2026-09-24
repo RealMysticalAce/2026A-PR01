@@ -141,6 +141,20 @@ def scroll_camera():
     # Le score doit représenter la distance verticale ainsi parcourue et le
     # meilleur score doit être mis à jour. Les plateformes sorties sous
     # l'écran doivent être retirées, puis de nouvelles plateformes générées.
+    
+    if doodle_dict["y"] < CAMERA_SCROLL_THRESHOLD:
+        scroll_amount = CAMERA_SCROLL_THRESHOLD - doodle_dict["y"]
+        doodle_dict["y"] = CAMERA_SCROLL_THRESHOLD
+        doodle_dict["score"] += scroll_amount
+        if doodle_dict["score"] > doodle_dict["high_score"]:
+            doodle_dict["high_score"] = doodle_dict["score"]
+
+        for platform in PLATFORMS:
+            platform["y"] += scroll_amount
+
+        PLATFORMS[:] = [p for p in PLATFORMS if p["y"] < SCREEN_HEIGHT]
+
+        generate_new_platforms()
 
     return
 
