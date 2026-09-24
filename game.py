@@ -21,6 +21,9 @@ def apply_gravity():
     """
     # TODO : Mettez à jour la vitesse verticale puis la position verticale
     # du Doodle à partir de GRAVITY.
+    
+    doodle_dict["vel_y"] += GRAVITY
+    doodle_dict["y"] += doodle_dict["vel_y"]
 
     return
 
@@ -102,6 +105,23 @@ def check_platform_collisions():
     # - spring : SPRING_JUMP_VELOCITY ;
     # - brown : JUMP_VELOCITY puis désactivation de la plateforme ;
     # - green/blue : JUMP_VELOCITY.
+
+    if doodle_dict["vel_y"] > 0:
+        doodle_rect = (doodle_dict["x"], doodle_dict["y"], DOODLE_WIDTH, DOODLE_HEIGHT)
+        for platform in PLATFORMS:
+            if platform["active"]:
+                platform_rect = (platform["x"], platform["y"], PLATFORM_WIDTH, platform["height"])
+                if rects_collide(doodle_rect, platform_rect):
+                    previous_y = doodle_dict["y"] - doodle_dict["vel_y"]
+                    if previous_y + DOODLE_HEIGHT <= platform["y"] + 14:
+                        if platform["type"] == "spring":
+                            doodle_dict["vel_y"] = SPRING_JUMP_VELOCITY
+                        elif platform["type"] == "brown":
+                            doodle_dict["vel_y"] = JUMP_VELOCITY
+                            platform["active"] = False
+                        else:  # green or blue
+                            doodle_dict["vel_y"] = JUMP_VELOCITY
+                        break
 
     return
 
